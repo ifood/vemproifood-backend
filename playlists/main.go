@@ -31,9 +31,9 @@ func main() {
 	spotifyClientID := os.Getenv("SPOTIFY_CLIENT_ID")
 	spotifyClientSecret := os.Getenv("SPOTIFY_CLIENT_SECRET")
 
-	temperatureRepository := impl.NewTemperatureRepository(*http.DefaultClient, openWeatherMapToken)
-	spotifyRepository := impl.NewSpotifyRepository(*http.DefaultClient, spotifyClientID, spotifyClientSecret)
-	playlistsRepository := impl.NewSpotifyPlaylistsRepository(*http.DefaultClient, spotifyRepository)
+	temperatureRepository := impl.NewTemperatureRepository(http.DefaultClient, openWeatherMapToken)
+	spotifyRepository := impl.NewSpotifyRepository(http.DefaultClient, spotifyClientID, spotifyClientSecret)
+	playlistsRepository := impl.NewSpotifyPlaylistsRepository(http.DefaultClient, spotifyRepository)
 	playlistsService := impl.NewPlaylistsService(temperatureRepository, playlistsRepository)
 	handler := api.NewRestPlaylistsHandler(playlistsService)
 

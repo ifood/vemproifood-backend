@@ -28,13 +28,13 @@ type SpotifyRepository interface {
 }
 
 type spotifyRepository struct {
-	client       http.Client
+	client       utils.HTTPClient
 	clientID     string
 	clientSecret string
 }
 
 // NewSpotifyRepository : used to create a new instance of SpotifyRepository
-func NewSpotifyRepository(client http.Client, clientID string, clientSecret string) SpotifyRepository {
+func NewSpotifyRepository(client utils.HTTPClient, clientID string, clientSecret string) SpotifyRepository {
 	return spotifyRepository{
 		client:       client,
 		clientID:     clientID,
@@ -86,12 +86,12 @@ func (r spotifyRepository) GetAccessToken() (string, error) {
 }
 
 type playlistsRepository struct {
-	client            http.Client
+	client            utils.HTTPClient
 	spotifyRepository SpotifyRepository
 }
 
 // NewSpotifyPlaylistsRepository : used to create a PlaylistsRepository
-func NewSpotifyPlaylistsRepository(client http.Client, spotifyRepository SpotifyRepository) base.PlaylistsRepository {
+func NewSpotifyPlaylistsRepository(client utils.HTTPClient, spotifyRepository SpotifyRepository) base.PlaylistsRepository {
 	return playlistsRepository{
 		client:            client,
 		spotifyRepository: spotifyRepository,
@@ -148,12 +148,12 @@ func (r playlistsRepository) GetByGenre(genre string) (base.Playlist, error) {
 }
 
 type temperatureRepository struct {
-	client   http.Client
+	client   utils.HTTPClient
 	apiToken string
 }
 
 // NewTemperatureRepository : used to create a TemperatureRepository
-func NewTemperatureRepository(client http.Client, apiToken string) base.TemperatureRepository {
+func NewTemperatureRepository(client utils.HTTPClient, apiToken string) base.TemperatureRepository {
 	return temperatureRepository{
 		client:   client,
 		apiToken: apiToken,
@@ -168,7 +168,8 @@ func (r temperatureRepository) GetTemperature(city string, latitude float64, lon
 		url = fmt.Sprintf("http://api.openweathermap.org/data/2.5/weather?lat=%v&lon=%v&appid=%s", latitude, longitude, r.apiToken)
 	}
 
-	response, err := r.client.Get(url)
+	request, _ := http.NewRequest(http.MethodGet, url, nil)
+	response, err := r.client.Do(request)
 	if err != nil {
 		return 0, err
 	}
