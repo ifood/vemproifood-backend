@@ -11,6 +11,7 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
+	"github.com/bgildson/ifood_backend_challenge/base"
 	"github.com/bgildson/ifood_backend_challenge/impl"
 	"github.com/bgildson/ifood_backend_challenge/utils"
 )
@@ -21,7 +22,7 @@ type RepositoryTestSuite struct {
 	client              utils.HTTPClient
 	clientId            string
 	clientSecret        string
-	genre               string
+	genre               base.Genre
 	playlist            map[string]interface{}
 	openWeatherMapToken string
 	city                string
@@ -36,7 +37,7 @@ func (s *RepositoryTestSuite) SetupTest() {
 	s.spotifyToken = "token"
 	s.clientId = "clientId"
 	s.clientSecret = "clientSecret"
-	s.genre = "rock"
+	s.genre = base.GenreRock
 	s.playlist = map[string]interface{}{
 		"tracks": map[string]interface{}{
 			"items": []map[string]interface{}{
@@ -78,7 +79,7 @@ func (s *RepositoryTestSuite) SetupTest() {
 				}
 				return response, nil
 
-			} else if req.Method == http.MethodGet && req.URL.String() == "https://api.spotify.com/v1/search?type=track&q=genre:"+s.genre {
+			} else if req.Method == http.MethodGet && req.URL.String() == "https://api.spotify.com/v1/search?type=track&q=genre:"+string(s.genre) {
 				if req.Header.Get("Authorization") == "" {
 					return nil, errors.New("Authorization header not informed")
 				}

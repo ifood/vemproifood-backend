@@ -98,13 +98,13 @@ func NewSpotifyPlaylistsRepository(client utils.HTTPClient, spotifyRepository Sp
 	}
 }
 
-func (r playlistsRepository) GetByGenre(genre string) (base.Playlist, error) {
+func (r playlistsRepository) GetByGenre(genre base.Genre) (base.Playlist, error) {
 	token, err := r.spotifyRepository.GetAccessToken()
 	if err != nil {
 		return nil, err
 	}
 
-	apiURL, _ := url.Parse("https://api.spotify.com/v1/search?type=track&q=genre:" + genre)
+	apiURL, _ := url.Parse("https://api.spotify.com/v1/search?type=track&q=genre:" + string(genre))
 	request := http.Request{
 		URL:    apiURL,
 		Method: http.MethodGet,

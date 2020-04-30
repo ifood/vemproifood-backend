@@ -24,15 +24,15 @@ func (s playlistsService) GetPlaylist(city string, latitude float64, longitude f
 		return nil, err
 	}
 
-	var genre string
+	var genre base.Genre
 	if temperature > 30 {
-		genre = "party"
+		genre = base.GenreParty
 	} else if temperature >= 15 {
-		genre = "pop"
+		genre = base.GenrePop
 	} else if temperature >= 10 {
-		genre = "rock"
+		genre = base.GenreRock
 	} else {
-		genre = "classical"
+		genre = base.GenreClassical
 	}
 
 	playlist, err := s.PlaylistsRepository.GetByGenre(genre)

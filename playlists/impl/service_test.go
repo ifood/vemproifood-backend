@@ -11,10 +11,10 @@ import (
 )
 
 type PlaylistsRepositoryMock struct {
-	getByGenre func(genre string) (base.Playlist, error)
+	getByGenre func(genre base.Genre) (base.Playlist, error)
 }
 
-func (r *PlaylistsRepositoryMock) GetByGenre(genre string) (base.Playlist, error) {
+func (r *PlaylistsRepositoryMock) GetByGenre(genre base.Genre) (base.Playlist, error) {
 	return r.getByGenre(genre)
 }
 
@@ -34,7 +34,7 @@ type PlaylistsServiceTestSuite struct {
 
 func (s *PlaylistsServiceTestSuite) SetupTest() {
 	s.playlistsRepository = &PlaylistsRepositoryMock{
-		getByGenre: func(genre string) (base.Playlist, error) {
+		getByGenre: func(genre base.Genre) (base.Playlist, error) {
 			return base.Playlist{
 				{Name: "track 01"},
 			}, nil
@@ -59,7 +59,7 @@ func (s *PlaylistsServiceTestSuite) TestPlaylistServiceGetPlaylist() {
 		},
 	}
 	playlistsRepository = &PlaylistsRepositoryMock{
-		getByGenre: func(genre string) (base.Playlist, error) {
+		getByGenre: func(genre base.Genre) (base.Playlist, error) {
 			return base.Playlist{{Name: "track 01"}}, nil
 		},
 	}
@@ -79,7 +79,7 @@ func (s *PlaylistsServiceTestSuite) TestPlaylistServiceGetPlaylist() {
 		},
 	}
 	playlistsRepository = &PlaylistsRepositoryMock{
-		getByGenre: func(genre string) (base.Playlist, error) {
+		getByGenre: func(genre base.Genre) (base.Playlist, error) {
 			return nil, nil
 		},
 	}
@@ -99,7 +99,7 @@ func (s *PlaylistsServiceTestSuite) TestPlaylistServiceGetPlaylist() {
 		},
 	}
 	playlistsRepository = &PlaylistsRepositoryMock{
-		getByGenre: func(genre string) (base.Playlist, error) {
+		getByGenre: func(genre base.Genre) (base.Playlist, error) {
 			return nil, errors.New("occur an error")
 		},
 	}
