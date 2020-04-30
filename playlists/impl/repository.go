@@ -173,6 +173,7 @@ func (r temperatureRepository) GetTemperature(city string, latitude float64, lon
 	if err != nil {
 		return 0, err
 	}
+	defer response.Body.Close()
 
 	if response.StatusCode != http.StatusOK {
 		return 0, ErrLoadTemperature
