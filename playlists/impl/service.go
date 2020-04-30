@@ -2,6 +2,7 @@ package impl
 
 import (
 	"github.com/bgildson/ifood_backend_challenge/base"
+	"github.com/bgildson/ifood_backend_challenge/utils"
 )
 
 type playlistsService struct {
@@ -24,16 +25,7 @@ func (s playlistsService) GetPlaylist(city string, latitude float64, longitude f
 		return nil, err
 	}
 
-	var genre base.Genre
-	if temperature > 30 {
-		genre = base.GenreParty
-	} else if temperature >= 15 {
-		genre = base.GenrePop
-	} else if temperature >= 10 {
-		genre = base.GenreRock
-	} else {
-		genre = base.GenreClassical
-	}
+	genre := utils.ParseTemperatureToGenre(temperature)
 
 	playlist, err := s.PlaylistsRepository.GetByGenre(genre)
 	if err != nil {
