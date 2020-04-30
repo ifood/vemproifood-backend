@@ -22,6 +22,7 @@ jobs:
           go test ./...
 
   push:
+    if: ${{ startsWith(github.ref, 'refs/tags/') }}
     runs-on: ubuntu-latest
     needs: test
     steps:
@@ -36,4 +37,3 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: bgildson/ifood_backend_challenge
           tag_with_ref: true
-          push: ${{ startsWith(github.ref, 'refs/tags/') }}
