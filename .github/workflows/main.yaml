@@ -1,5 +1,12 @@
 name: Test and Push Image
-on: [push, pull_request]
+on:
+  push:
+    paths:
+    - 'playlists/**'
+  pull_request:
+    paths:
+    - 'playlists/**'
+
 jobs:
   test:
     strategy:
