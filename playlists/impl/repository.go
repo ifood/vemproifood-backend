@@ -60,10 +60,10 @@ func (r spotifyRepository) GetAccessToken() (string, error) {
 	}
 
 	response, err := r.client.Do(request)
+	defer response.Body.Close()
 	if err != nil {
 		return "", err
 	}
-	defer response.Body.Close()
 
 	if response.StatusCode != http.StatusOK {
 		return "", ErrSpotifyAuthentication
@@ -114,10 +114,10 @@ func (r playlistsRepository) GetByGenre(genre base.Genre) (base.Playlist, error)
 	}
 
 	response, err := r.client.Do(&request)
+	defer response.Body.Close()
 	if err != nil {
 		return nil, err
 	}
-	defer response.Body.Close()
 
 	if response.StatusCode != http.StatusOK {
 		return nil, ErrSpotifyLoadPlaylist
@@ -160,20 +160,13 @@ func NewTemperatureRepository(client utils.HTTPClient, apiToken string) base.Tem
 	}
 }
 
-func (r temperatureRepository) GetTemperature(city string, latitude float64, longitude float64) (float64, error) {
-	var url string
-	if city != "" {
-		url = fmt.Sprintf("http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s", city, r.apiToken)
-	} else {
-		url = fmt.Sprintf("http://api.openweathermap.org/data/2.5/weather?lat=%v&lon=%v&appid=%s", latitude, longitude, r.apiToken)
-	}
-
+func (r temperatureRepository) getWithURL(url string) (float64, error) {
 	request, _ := http.NewRequest(http.MethodGet, url, nil)
 	response, err := r.client.Do(request)
+	defer response.Body.Close()
 	if err != nil {
 		return 0, err
 	}
-	defer response.Body.Close()
 
 	if response.StatusCode != http.StatusOK {
 		return 0, ErrLoadTemperature
@@ -196,4 +189,16 @@ func (r temperatureRepository) GetTemperature(city string, latitude float64, lon
 	temperature := utils.ParseKelvinToCelsius(weather.Main.Temp)
 
 	return temperature, nil
+}
+
+func (r temperatureRepository) GetByCity(city string) (float64, error) {
+	url := fmt.Sprintf("http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s", city, r.apiToken)
+
+	return r.getWithURL(url)
+}
+
+func (r temperatureRepository) GetByLatitudeLongitude(latitude, longitude float64) (float64, error) {
+	url := fmt.Sprintf("http://api.openweathermap.org/data/2.5/weather?lat=%v&lon=%v&appid=%s", latitude, longitude, r.apiToken)
+
+	return r.getWithURL(url)
 }

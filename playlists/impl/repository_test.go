@@ -133,18 +133,20 @@ func (s *RepositoryTestSuite) TestSpotifyPlaylistRepositoryGetByGenre() {
 	}
 }
 
-func (s *RepositoryTestSuite) TestTemperatureRepositoryGetTemperature() {
+func (s *RepositoryTestSuite) TestTemperatureRepositoryGetByCity() {
 	repo := impl.NewTemperatureRepository(s.client, s.openWeatherMapToken)
 
-	// with city
-	result, err := repo.GetTemperature(s.city, 0, 0)
+	result, err := repo.GetByCity(s.city)
 
 	s.Nil(err)
 
 	s.Equal(s.temperatureCelsius, result)
+}
 
-	// with lat,lon
-	result, err = repo.GetTemperature("", s.lat, s.lon)
+func (s *RepositoryTestSuite) TestTemperatureRepositoryGetByLatitudeLongitude() {
+	repo := impl.NewTemperatureRepository(s.client, s.openWeatherMapToken)
+
+	result, err := repo.GetByLatitudeLongitude(s.lat, s.lon)
 
 	s.Nil(err)
 

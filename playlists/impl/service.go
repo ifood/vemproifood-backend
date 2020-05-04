@@ -20,7 +20,13 @@ func NewPlaylistsService(temperatureRepository base.TemperatureRepository,
 }
 
 func (s playlistsService) GetPlaylist(city string, latitude float64, longitude float64) (base.Playlist, error) {
-	temperature, err := s.temperatureRepository.GetTemperature(city, latitude, longitude)
+	var temperature float64
+	var err error
+	if city == "" {
+		temperature, err = s.temperatureRepository.GetByLatitudeLongitude(latitude, longitude)
+	} else {
+		temperature, err = s.temperatureRepository.GetByCity(city)
+	}
 	if err != nil {
 		return nil, err
 	}
