@@ -21,10 +21,10 @@ To take Spotify Credentials, follow the link: [https://developer.spotify.com/doc
 
 2. In the terminal run the command bellow exchanging <OPEN_WEATHER_MAP_TOKEN>, <SPOTIFY_CLIENT_ID>, <SPOTIFY_CLIENT_SECRET> with your credentials
 ```
-docker run -p 8080:8080 -e PORT=8080 -e OPEN_WEATHER_MAP_TOKEN=<OPEN_WEATHER_MAP_TOKEN> -e SPOTIFY_CLIENT_ID=<SPOTIFY_CLIENT_ID> -e SPOTIFY_CLIENT_SECRET=<SPOTIFY_CLIENT_SECRET> bgildson/ifood_backend_challenge:1.0.0
+docker run -p 8080:8080 -e PORT=8080 -e OPEN_WEATHER_MAP_TOKEN=<OPEN_WEATHER_MAP_TOKEN> -e SPOTIFY_CLIENT_ID=<SPOTIFY_CLIENT_ID> -e SPOTIFY_CLIENT_SECRET=<SPOTIFY_CLIENT_SECRET> bgildson/ifood_backend_challenge
 ```
 
-#### Running from source code
+### Running from source code
 
 1. Your environment must be prepared to run GoLang, how described [here](https://golang.org/doc/install)
 
