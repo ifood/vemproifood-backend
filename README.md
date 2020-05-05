@@ -1,40 +1,63 @@
-# #VemProiFood! - Backend Challenge
+# ifood_backend_challenge
+---
 
-Create a micro-service able to accept RESTful requests receiving as parameter
-either city name or lat long coordinates and returns a playlist (only track
-names is fine) suggestion according to the current temperature.
+This repository contains a project to satisfy an ifood challenge for backend developer. The challenge has the objetive to create a scalable microservice rest api that serves a playlist based in user parameters.
 
-## Business rules
+The api expects to receive either `city` or `lat` and `lon` as query params and use the query params to get a place temperature and return a playlist based on this temperature.
 
-* If temperature (celcius) is above 30 degrees, suggest tracks for party
-* In case temperature is between 15 and 30 degrees, suggest pop music tracks
-* If it's a bit chilly (between 10 and 14 degrees), suggest rock music tracks
-* Otherwise, if it's freezing outside, suggests classical music tracks 
+_To see the original challenge requirements, [click here](CHALLENGE.md)._
 
-## Hints
+### Running the microservice
 
-You can make usage of OpenWeatherMaps API (https://openweathermap.org) to fetch
-temperature data and Spotify (https://developer.spotify.com) to suggest the
-tracks as part of the playlist.
+The microservice uses the [Open Weather Map](https://openweathermap.org/api) and [Spotify](https://developer.spotify.com/documentation/web-api/quick-start/) apis and require their credentials be informed.
 
-- [Spotify API](https://developer.spotify.com/documentation/web-api/quick-start/) (You can use this Client Id: 08c1a6be652e4fdca07f1815bfd167e4)
-- [OpenWeatherMaps API](https://home.openweathermap.org/users/sign_up) (You can use this API Key: b77e07f479efe92156376a8b07640ced)
+To take Open Weather Map Credentials, follow the link: [https://openweathermap.org/appid](https://openweathermap.org/appid). The Open Weather Map will provide a `API key` that must be passed as **OPEN_WEATHER_MAP_TOKEN** to the microservice.
 
-### Sample cities
-http://api.openweathermap.org/data/2.5/weather?q=campinas&appid=b77e07f479efe92156376a8b07640ced
-http://api.openweathermap.org/data/2.5/weather?q=salvador&appid=b77e07f479efe92156376a8b07640ced
-http://api.openweathermap.org/data/2.5/weather?q=brasilia&appid=b77e07f479efe92156376a8b07640ced
-http://api.openweathermap.org/data/2.5/weather?q=fortaleza&appid=b77e07f479efe92156376a8b07640ced
-http://api.openweathermap.org/data/2.5/weather?q=manaus&appid=b77e07f479efe92156376a8b07640ced
+To take Spotify Credentials, follow the link: [https://developer.spotify.com/documentation/web-api/quick-start/#set-up-your-account](https://developer.spotify.com/documentation/web-api/quick-start/#set-up-your-account). The Spotify will provide `client_id` and `client_secret` that must be passed as **SPOTIFY_CLIENT_ID** and **SPOTIFY_CLIENT_SECRET** respectively to the microservice.
 
-## Non functional requirements
+### Running with Docker
 
-As this service will be a worldwide success, it must be prepared to be fault
-tolerant, responsive and resilient.
+1. Certify that you have a docker installation or follow the steps described [here](https://docs.docker.com/get-docker/)
 
-Use whatever language, tools and frameworks you feel comfortable to, and
-briefly elaborate on your solution, architecture details, choice of patterns
-and frameworks.
+2. In the terminal run the command bellow exchanging <OPEN_WEATHER_MAP_TOKEN>, <SPOTIFY_CLIENT_ID>, <SPOTIFY_CLIENT_SECRET> with your credentials
+```
+docker run -p 8080:8080 -e PORT=8080 -e OPEN_WEATHER_MAP_TOKEN=<OPEN_WEATHER_MAP_TOKEN> -e SPOTIFY_CLIENT_ID=<SPOTIFY_CLIENT_ID> -e SPOTIFY_CLIENT_SECRET=<SPOTIFY_CLIENT_SECRET> bgildson/ifood_backend_challenge
+```
 
-Also, make it easy to deploy/run your service(s) locally (consider using some
-container/vm solution for this). Once done, share your code with us.
+### Running from source code
+
+1. Your environment must be prepared to run GoLang, how described [here](https://golang.org/doc/install)
+
+2. Clone this repository
+```
+git clone https://github.com/bgildson/ifood_backend_challenge
+```
+
+3. In the terminal, walk to the playlists folder in the cloned repository folder and download project dependencies
+```
+go mod download
+```
+
+4. Copy the file containing the environment variables definition
+```
+cp .env.example .env
+```
+
+5. Set the variables in the .env file with the Open Weather Map and Spotify credentials
+
+6. Run the service
+```
+go run main.go
+```
+
+### Running with kubernetes
+
+1. Your environment must be prepared to run kubernetes, how described [here](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+_A good option to run kubernetes locally is using **minikube**, to prepare your environment to run minikube, follow the steps described [here](https://kubernetes.io/docs/tasks/tools/install-minikube/)_
+
+2. Set your credentials on **k8s/playlists-master.yaml** file
+
+3. In the terminal, run the command
+```
+kubectl apply -f k8s/playlists-master.yaml
+```

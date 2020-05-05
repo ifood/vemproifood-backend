@@ -1,0 +1,47 @@
+name: Test and Push Image
+on:
+  push:
+    paths:
+    - 'playlists/**'
+  pull_request:
+    paths:
+    - 'playlists/**'
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        go-version: [1.14.x]
+        platform: [ubuntu-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Test
+        run: |
+          cd playlists 
+          go test ./...
+
+  push:
+    if: ${{ startsWith(github.ref, 'refs/tags/') }}
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and Push Image
+        uses: docker/build-push-action@v1
+        with:
+          path: ./playlists
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: bgildson/ifood_backend_challenge
+          tags: latest
+          tag_with_ref: true
