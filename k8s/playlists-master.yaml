@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: playlists
-        image: bgildson/ifood_backend_challenge:1.0.0
+        image: bgildson/ifood_backend_challenge
         ports:
         - containerPort: 80
         env:

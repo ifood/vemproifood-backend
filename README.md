@@ -49,3 +49,15 @@ cp .env.example .env
 ```
 go run main.go
 ```
+
+### Running with kubernetes
+
+1. Your environment must be prepared to run kubernetes, how described [here](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+_A good option to run kubernetes locally is using **minikube**, to prepare your environment to run minikube, follow the steps described [here](https://kubernetes.io/docs/tasks/tools/install-minikube/)_
+
+2. Set your credentials on **k8s/playlists-master.yaml** file
+
+3. In the terminal, run the command
+```
+kubectl apply -f k8s/playlists-master.yaml
+```
