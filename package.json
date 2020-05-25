@@ -1,0 +1,25 @@
+{
+  "name": "vemproifood-backend",
+  "version": "1.0.0",
+  "description": "Ifood backend challenge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeoF99/vemproifood-backend.git"
+  },
+  "author": "Leo Ferreira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LeoF99/vemproifood-backend/issues"
+  },
+  "homepage": "https://github.com/LeoF99/vemproifood-backend#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
