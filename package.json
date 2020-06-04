@@ -4,8 +4,7 @@
   "description": "Ifood backend challenge",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +17,10 @@
   },
   "homepage": "https://github.com/LeoF99/vemproifood-backend#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "temp-units-conv": "^1.0.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
