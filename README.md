@@ -9,7 +9,7 @@ names is fine) suggestion according to the current temperature.
 * If temperature (celcius) is above 30 degrees, suggest tracks for party
 * In case temperature is between 15 and 30 degrees, suggest pop music tracks
 * If it's a bit chilly (between 10 and 14 degrees), suggest rock music tracks
-* Otherwise, if it's freezing outside, suggests classical music tracks 
+* Otherwise, if it's freezing outside, suggests classical music tracks
 
 ## Hints
 
@@ -38,3 +38,14 @@ and frameworks.
 
 Also, make it easy to deploy/run your service(s) locally (consider using some
 container/vm solution for this). Once done, share your code with us.
+
+## Installation and execution instructions
+
+Requirements: [NodeJs](https://nodejs.org/en/), [Docker](https://docs.docker.com/get-docker/), [Docker Compose](https://docs.docker.com/compose/install/)
+
+To install the project, all you have to do is run `install.sh`. After that, the project will automatically
+run on port [3333](https://localhost:3333).
+
+To run the project without the installation part, just run `dev.sh`. The project will start on port [3333](https://localhost:3333).
+
+If you don't want to run with Docker, you can always run `npm install` to setup the project and `npm start` to run it.
