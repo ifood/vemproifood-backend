@@ -43,6 +43,11 @@ container/vm solution for this). Once done, share your code with us.
 
 Requirements: [NodeJs](https://nodejs.org/en/), [Docker](https://docs.docker.com/get-docker/), [Docker Compose](https://docs.docker.com/compose/install/)
 
+First, create a `.env` file with the following variables, and fill then with your credentials:
+`SPOTIFY_CLIENT_ID,
+SPOTIFY_CLIENT_SECRET,
+OPEN_WEATHER_API_KEY`
+
 To install the project, all you have to do is run `install.sh`. After that, the project will automatically
 run on port [3333](https://localhost:3333).
 

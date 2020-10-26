@@ -5,10 +5,9 @@ const apiKey = config.openWeatherApiKey
 
 module.exports={
     async getByCityName(req, res){
-        console.log(apiKey)
-        const { q } = req.body
+        const { city } = req.query
 
-        let temp = await service.getPlaylist(q, apiKey)
+        let temp = await service.getPlaylist(city, apiKey)
 
         return res.json({temp})
     }
