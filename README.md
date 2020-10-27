@@ -44,8 +44,11 @@ container/vm solution for this). Once done, share your code with us.
 Requirements: [NodeJs](https://nodejs.org/en/), [Docker](https://docs.docker.com/get-docker/), [Docker Compose](https://docs.docker.com/compose/install/)
 
 First, create a `.env` file with the following variables, and fill then with your credentials:
+
 `SPOTIFY_CLIENT_ID,
+
 SPOTIFY_CLIENT_SECRET,
+
 OPEN_WEATHER_API_KEY`
 
 To install the project, all you have to do is run `install.sh`. After that, the project will automatically
@@ -54,3 +57,24 @@ run on port [3333](https://localhost:3333).
 To run the project without the installation part, just run `dev.sh`. The project will start on port [3333](https://localhost:3333).
 
 If you don't want to run with Docker, you can always run `npm install` to setup the project and `npm start` to run it.
+
+## Endpoints
+
+This microservice has only one endpoint: `/playlist`.
+You can choose between inform a city by his name or inform geocoordinates (latitute and longitude), to make the microservice function properly.
+
+The two ways are displayed below:
+
+City name:
+`/playlist?city={city_name}`
+
+Geocoordinates:
+`/playlist?lat={latitude}&lon={longitude}`
+
+### Contacts
+
+You can contact me at any moment at:
+
+E-mail: `leo.ferreira@dcx.ufpb.br`
+
+LinkedIn: https://www.linkedin.com/in/leoferreiras/

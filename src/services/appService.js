@@ -22,7 +22,7 @@ spotifyApi.clientCredentialsGrant().then(
   )
 
 module.exports = {
-    async getPlaylist(city, apiKey){
+    async getPlaylistByCity(city, apiKey){
         try{
             const res = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`)
 
@@ -36,6 +36,23 @@ module.exports = {
         }catch(error){
             console.log(error)
             return error
+        }
+    },
+
+    async getPlaylistByGeocoordinates(lat, lon, apiKey){
+        try {
+            const res = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`)
+
+            const kelvinTemp = res.data.main['temp']
+            const celciusTemp = tuc.k2c(kelvinTemp)
+
+            const getPlaylistType = selectPlaylistType(celciusTemp)
+            const playlist = getMusics(getPlaylistType)
+
+            return playlist
+        } catch (error) {
+            console.log(error);
+            return error;
         }
     }
 }
