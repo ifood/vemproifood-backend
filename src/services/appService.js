@@ -53,12 +53,29 @@ function selectPlaylistType(temp){
 }
 
 async function getMusics(type){
-    let t;
+    let playlists;
     await spotifyApi.searchPlaylists(type)
     .then(function(data){
-        t = data;
+        playlists = data.body.playlists.items
     }, function(err){
-        t = err
+        playlists = err
     })
-    return t;
+
+    if(playlists[0]){
+        let musicData;
+        await spotifyApi.getPlaylist(playlists[0].id)
+        .then(function (data) {
+            musicData = data.body.tracks.items
+        }, function (err) {
+            musicData = err
+        })
+
+        const tracksInfo = musicData.map(track => {
+            return { name: track.track.name, artist: track.track.artists[0].name }
+        })
+
+        return tracksInfo
+    }
+
+    return 'No playlist found! Try again!'
 }

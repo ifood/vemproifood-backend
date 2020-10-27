@@ -7,8 +7,8 @@ module.exports={
     async getByCityName(req, res){
         const { city } = req.query
 
-        let temp = await service.getPlaylist(city, apiKey)
+        let musics = await service.getPlaylist(city, apiKey)
 
-        return res.json({temp})
+        return res.json(musics)
     }
 }
